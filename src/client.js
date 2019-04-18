@@ -5,6 +5,7 @@ const tls = require('tls');
 
 const port = 8883;
 let session = Buffer.from('');
+let tlsSocket;
 
 const color = '\x1b[33m';
 const reset = '\x1b[0m';
@@ -14,7 +15,7 @@ function log(...msg) {
 
 function connect() {
     log(`Connecting to server, using session option parameter: ${session.length ? session.toString('hex').substr(0, 50) : 'new session'}...`);
-    const tlsSocket = tls.connect(port, {
+    tlsSocket = tls.connect(port, {
         key: readFileSync(`${__dirname}/certs/client/client.key`),
         cert: readFileSync(`${__dirname}/certs/client/client.crt`),
         ca: [readFileSync(`${__dirname}/certs/ca/ca.crt`)],
@@ -37,7 +38,7 @@ function connect() {
                 break;
         }
         tlsSocket.on('close', () => {
-            log('server closed conection, client reconnecting in 2500ms...');
+            log('closed conection, client reconnecting in 2500ms...');
             setTimeout(() => process.nextTick(() => connect()), 2500);
         });
         log(`secureConnectListener (${tlsSocket.getProtocol()}), session reused: ${tlsSocket.isSessionReused()}, sessionId: ${session.toString('hex').substr(0, 50)}...`);
@@ -48,7 +49,12 @@ function connect() {
         log('client session available', sess);
         session = sess;
     });
+
 }
 
 log(`Starting client, waiting 100ms for server to be online...`);
 setTimeout(() => connect(), 100);
+setTimeout(() => {
+    log('Simulating client disconnect and reconnect');
+    tlsSocket.destroy();
+}, 5000);

@@ -6,7 +6,7 @@ setTimeout(() => {
     server.kill('SIGUSR2');
     setTimeout(() => {
         server = fork(`${__dirname}/server.js`);
-        setTimeout(() => process.exit(), 3000);
+        setTimeout(() => process.exit(), 5500);
     }, 1000);
 }, 2000);
 

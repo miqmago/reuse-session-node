@@ -35,12 +35,14 @@ function startServer() {
     
     server.on('listening', () => {
         log(`TLS server is listening on port ${port}`);
+        console.log();
     });
     
     server.listen(port);
 }
 
 process.once('SIGUSR2', () => {
+    console.log();
     log('Simulating server restart...');
     server.close();
     process.exit();

@@ -14,6 +14,7 @@ function log(...msg) {
 }
 
 function connect() {
+    console.log();
     log(`Connecting to server, using session option parameter: ${session.length ? session.toString('hex').substr(0, 50) : 'new session'}...`);
     tlsSocket = tls.connect(port, {
         key: readFileSync(`${__dirname}/certs/client/client.key`),
@@ -55,6 +56,7 @@ function connect() {
 log(`Starting client, waiting 100ms for server to be online...`);
 setTimeout(() => connect(), 100);
 setTimeout(() => {
+    console.log();
     log('Simulating client disconnect and reconnect');
     tlsSocket.destroy();
 }, 5000);

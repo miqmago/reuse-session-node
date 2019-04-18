@@ -19,6 +19,7 @@ function startServer() {
         ca: [readFileSync(`${__dirname}/certs/ca/ca.crt`)],
         sessionTimeout: 3600,
         sessionIdContext: 'keyBoard Cat!',
+        ticketKeys: Buffer.from('8!QB.G9QnYO~FjRShH:EJI#dCz0%AH9iV,vkZsv-WQ3f$w5h'),
     });
     
     server.on('secureConnection', (tlsSocket) => {

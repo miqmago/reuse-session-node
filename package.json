@@ -7,7 +7,7 @@
     "certs": "[ ! -d ./src/certs ] && ./createCerts.sh ./src localhost pAs$~w0rD || true",
     "start": "npm run certs && node src/index.js"
   },
-  "author": "",
+  "author": "Miquel Martin <info@appfeel.com>",
   "license": "MIT",
   "dependencies": {
     "@types/node": "^11.13.5"

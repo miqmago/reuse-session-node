@@ -39,7 +39,7 @@ function connect() {
                 break;
         }
         tlsSocket.on('close', () => {
-            log('closed conection, client reconnecting in 2500ms...');
+            log('closed conection, reconnecting in 2500ms...');
             setTimeout(() => process.nextTick(() => connect()), 2500);
         });
         log(`secureConnectListener (${tlsSocket.getProtocol()}), session reused: ${tlsSocket.isSessionReused()}, sessionId: ${session.toString('hex').substr(0, 50)}...`);

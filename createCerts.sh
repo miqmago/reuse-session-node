@@ -11,6 +11,7 @@ COUNTRY="AU"
 CAO="CA Signing Authority"
 SERVERO="Server cert"
 CLIENTO="Client cert"
+CLIENTN = "Client name"
 
 ROOTPATH="$1"
 FQDN=$2
@@ -54,7 +55,7 @@ openssl x509 -req -days 365 -passin pass:$PASSWORD -in $PATH_TMP/server.csr -CA 
 
 openssl genrsa -out $PATH_CLIENT/client.key $RSABITS
 
-openssl req -new -key $PATH_CLIENT/client.key -out $PATH_TMP/client.csr -passout pass:$PASSWORD -subj "/C=$COUNTRY/ST=./L=./O=$CLIENTO/CN=CLIENT"
+openssl req -new -key $PATH_CLIENT/client.key -out $PATH_TMP/client.csr -passout pass:$PASSWORD -subj "/C=$COUNTRY/ST=./L=./O=$CLIENTO/CN=$CLIENTN"
 
 openssl x509 -req -days 365 -passin pass:$PASSWORD -in $PATH_TMP/client.csr -CA $PATH_CA/ca.crt -CAkey $PATH_CA/ca.key -set_serial 01 -out $PATH_CLIENT/client.crt
 
